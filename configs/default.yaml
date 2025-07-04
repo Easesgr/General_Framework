@@ -1,0 +1,56 @@
+---
+  # 框架参数
+  home_dir: '.'
+  reset: false
+  resume: false
+  debug: false
+  run: true
+  load: null
+  load_model: '1'
+  # 系统参数
+  sys:
+    log: true
+    seed: 1
+    cpu: false
+  # 数据参数
+  data:
+    train_data_root: '/Users/anyi/Data/Rain200H/train'
+    val_data_root: '/Users/anyi/Data/Rain200H/test'
+    patch_size: 128
+    batch_size: 1
+    custom_data_path: null
+    n_threads: 8
+    preprocess: true
+    max_evaluation_count: 10
+    test_data: Rain200H
+
+  # 训练参数
+  train:
+    chop: false
+    test_only: false
+    save_results: false
+    gpus: [0,1]
+    vgg_model_path: '/Users/anyi/2024Code/LKAD/pre/vgg19.pth'
+    max_iter: 1500000
+    print_loss: 1
+    test_every: 1000
+    print_lr: 10000
+  # 模型参数
+  model:
+    LFAEUnet:
+      model_name: 'LFAEUnet'
+      model_args:
+        dim: 60
+        num_blocks: [2,2,2]
+        n_groups: 4
+      optim_args:
+        type: AdamW
+        lr: !!float 2e-4
+        weight_decay: !!float 1e-4
+        betas: [ 0.9, 0.999 ]
+      ema_decay: 0.999
+      scheduler:
+        type: MultiStepLR
+        milestones: [135000, 202500, 235440, 253530]
+        gamma: 0.5
+
